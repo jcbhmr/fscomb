@@ -9,25 +9,15 @@ import (
 	"go.jcbhmr.com/xfs"
 )
 
-type osDirFS interface {
-	fs.FS
-	fs.StatFS
-	fs.ReadFileFS
-	fs.ReadDirFS
-	fs.ReadLinkFS
+type dirFS string
+
+func DirFS(dir string) fs.FS {
+	os.DirFS()
+	return dirFS(dir)
 }
 
-type dirFS struct {
-	osDirFS
-	dir string
-}
-
-func DirFS(dir string) xfs.WriteFS {
-	return &dirFS{
-		osDirFS: os.DirFS(dir).(osDirFS),
-		dir:     dir,
-	}
-}
+var _ xfs.
+var _ xfs.SameFileFS = dirFS("")
 
 var errEmptyRoot = errors.New("DirFS with empty root")
 
